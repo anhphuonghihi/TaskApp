@@ -15,10 +15,10 @@ const userCtrl = {
       const passwordHash = await bcrypt.hash(password, 10);
       const newUser = await Users({ username, password: passwordHash });
       await newUser.save();
-      const token = jwt.sign({ id: newUser._id }, process.env.ACCESS, {
+      const token = jwt.sign({ id: newUser._id }, process.env.TOKEN, {
         expiresIn: "1d",
       });
-      res.json({ newUser, token });
+      res.json({ user: newUser, token });
     } catch (error) {
       return res.status(500).json({ message: error.message });
     }
@@ -26,17 +26,19 @@ const userCtrl = {
   login: async (req, res) => {
     try {
       const { username, password } = req.body;
+      const user = await Users.findOne({ username }).select(
+        "password username"
+      );
       if (username.length < 8)
         return res.status(400).json({ message: "Username is at the 8 char" });
       if (password.length < 8)
         return res.status(400).json({ message: "Password is at the 8 char" });
-      const user = await Users.findOne({ username });
       if (!user)
         return res.status(400).json({ message: "User does not exists" });
       const isWatch = await bcrypt.compare(password, user.password);
       if (!isWatch)
         return res.status(400).json({ message: "incorrect password" });
-      const token = jwt.sign({ id: user._id }, process.env.ACCESS, {
+      const token = jwt.sign({ id: user._id }, process.env.TOKEN, {
         expiresIn: "1d",
       });
       res.json({ user, token });
