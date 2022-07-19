@@ -3,7 +3,7 @@ const router = require('express').Router()
 
 const auth = require('./auth')
 const board = require('./board')
-// const section = require('./section')
+const section = require('./section')
 // const task = require('./task')
 
 router.use('/auth', auth)
