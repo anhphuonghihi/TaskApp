@@ -1,7 +1,7 @@
 const Users = require("../models/user");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-const userCtrl = {
+const user = {
   register: async (req, res) => {
     try {
       const { username, password } = req.body;
@@ -57,4 +57,4 @@ const userCtrl = {
     }
   },
 };
-module.exports = userCtrl;
+module.exports = user;
