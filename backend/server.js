@@ -7,8 +7,8 @@ const cors = require("cors");
 app.use(cors());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-// const routes = require("./src/v1/routes");
-// app.use("/api", routes);
+const routes = require("./src/v1/routes");
+app.use("/api", routes);
 app.listen(port, () =>
   console.log("> Server is up and running on port : " + port)
 );
