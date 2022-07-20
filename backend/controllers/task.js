@@ -30,7 +30,7 @@ const task = {
           $set: { position: key },
         });
       }
-      res.status(200).json("deleted");
+      res.json("deleted");
     } catch (error) {
       return res.status(500).json({ message: error.message });
     }
@@ -39,12 +39,12 @@ const task = {
     try {
       const { id } = req.params;
       const task = await Task.findByIdAndUpdate(id, { $set: req.body });
-      res.status(200).json(task);
+      res.json(task);
     } catch (error) {
       return res.status(500).json({ message: error.message });
     }
   },
-  updatePosition: async (req, res) => {
+  position: async (req, res) => {
     try {
       const {
         resourceList,
@@ -72,7 +72,7 @@ const task = {
           },
         });
       }
-      res.status(200).json("updated");
+      res.json("updated");
     } catch (error) {
       return res.status(500).json({ message: error.message });
     }
