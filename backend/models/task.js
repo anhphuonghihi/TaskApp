@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 const taskSchema = new mongoose.Schema(
   {
     section: {
-      type: Schema.Types.ObjectId,
+      type: mongoose.Schema.Types.ObjectId,
       ref: "Section",
       required: true,
     },

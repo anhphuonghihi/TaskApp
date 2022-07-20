@@ -15,7 +15,7 @@ const user = {
       const passwordHash = await bcrypt.hash(password, 10);
       const newUser = await Users({ username, password: passwordHash });
       await newUser.save();
-      const token = jwt.sign({ id: newUser._id }, process.env.TOKEN, {
+      const token = jwt.sign({ _id: newUser._id }, process.env.TOKEN, {
         expiresIn: "1d",
       });
       res.json({ user: newUser, token });
@@ -38,7 +38,7 @@ const user = {
       const isWatch = await bcrypt.compare(password, user.password);
       if (!isWatch)
         return res.status(400).json({ message: "incorrect password" });
-      const token = jwt.sign({ id: user._id }, process.env.TOKEN, {
+      const token = jwt.sign({ _id: user._id }, process.env.TOKEN, {
         expiresIn: "1d",
       });
       res.json({ user, token });

@@ -1,11 +1,15 @@
 const router = require("express").Router();
 const board = require("../controllers/board");
 const auth = require("../middleware/auth");
-router.route("/").get(board.gets).post(auth, board.create);
+router
+  .route("/")
+  .get(auth, board.gets)
+  .post(auth, board.create)
+  .put(auth, board.updatePosition);
 router
   .route("/favourites")
-  .get(board.getFavourites)
-  .post(auth, board.updateFavouritePosition);
+  .get(auth, board.getFavourites)
+  .put(auth, board.updateFavouritePosition);
 router
   .route("/:id")
   .get(board.getOne)

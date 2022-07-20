@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 const sectionSchema = new mongoose.Schema(
   {
     board: {
-      type: Schema.Types.ObjectId,
+      type: mongoose.Schema.Types.ObjectId,
       ref: "Board",
       required: true,
     },
