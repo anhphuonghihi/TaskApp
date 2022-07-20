@@ -1,0 +1,5 @@
+export const HOME_ROUTER = '/'
+export const BOARD_ROUTE = '/board'
+export const LOGIN_ROUTE = '/login'
+export const REGISTER_ROUTE = '/resgiter'
+export const BOARD_ID_ROUTE = '/board/:id'
