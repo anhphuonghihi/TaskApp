@@ -37,7 +37,7 @@ const Signup = () => {
     if (err) return;
     try {
       const res = await auth.signup({ username, password, confirmPassword });
-      console.log("🚀 ~ file: Signup.jsx ~ line 40 ~ handleSubmit ~ res", res)
+      console.log("🚀 ~ file: Signup.jsx ~ line 40 ~ handleSubmit ~ res", res);
 
       res && localStorage.setItem("accesstoken", res.token);
       //   navigate("/");
