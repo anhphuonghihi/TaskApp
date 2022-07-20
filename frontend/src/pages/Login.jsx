@@ -3,6 +3,10 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import LoadingButton from "@mui/lab/LoadingButton";
 import auth from "../api/auth";
+import {
+    HOME_ROUTER,
+    REGISTER_ROUTE,
+  } from "../utils/consts";
 const Login = () => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
@@ -31,7 +35,7 @@ const Login = () => {
     if (err) return;
     try {
       const res = await auth.login({ username, password });
-      localStorage.setItem("accesstoken", res.token);
+      res && localStorage.setItem("accesstoken", res.token);
       //   navigate("/");
       setLoading(false);
     } catch (error) {}
@@ -71,7 +75,7 @@ const Login = () => {
         Login
       </LoadingButton>
       Don't have an account?
-      <Button component={Link} to="/signup">
+      <Button component={Link} to={REGISTER_ROUTE}>
         Signup
       </Button>
     </Box>

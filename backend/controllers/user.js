@@ -4,7 +4,7 @@ const jwt = require("jsonwebtoken");
 const user = {
   register: async (req, res) => {
     try {
-      const { username, password } = req.body;
+      const { username, password, confirmPassword } = req.body;
       const user = await Users.findOne({ username });
       if (user)
         return res.status(400).json({ message: "The username already exists" });
@@ -12,12 +12,20 @@ const user = {
         return res.status(400).json({ message: "Username is at the 8 char" });
       if (password.length < 8)
         return res.status(400).json({ message: "Password is at the 8 char" });
+      if (confirmPassword !== password)
+        return res.status(400).json({ message: "Incorrect password" });
       const passwordHash = await bcrypt.hash(password, 10);
-      const newUser = await Users({ username, password: passwordHash });
+      const passwordConfirmHash = await bcrypt.hash(confirmPassword, 10);
+      const newUser = await Users({
+        username,
+        password: passwordHash,
+        confirmPassword: passwordConfirmHash,
+      });
       await newUser.save();
       const token = jwt.sign({ _id: newUser._id }, process.env.TOKEN, {
         expiresIn: "1d",
       });
+
       res.json({ user: newUser, token });
     } catch (error) {
       return res.status(500).json({ message: error.message });
@@ -33,6 +41,7 @@ const user = {
         return res.status(400).json({ message: "Username is at the 8 char" });
       if (password.length < 8)
         return res.status(400).json({ message: "Password is at the 8 char" });
+
       if (!user)
         return res.status(400).json({ message: "User does not exists" });
       const isWatch = await bcrypt.compare(password, user.password);
